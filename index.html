@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head><title>Asistente de Voz</title></head>
+<head>
+<title>Asistente de Voz</title>
+</head>
 <body style="text-align:center; padding:80px; font-family:sans-serif; background:#f5f5f5">
 <h1 style="font-size:42px">Asistente de Voz</h1>
 <p style="font-size:24px">Calcula hablando</p>
-<button style="font-size:60px; padding:35px 70px; border-radius:30px; border:none; background:#4CAF50; color:white; box-shadow:0 4px 8px rgba(0,0,0,0.2)" onclick="alert('Di tu cuenta en voz alta')">🎤</button>
+<button id="btn" style="font-size:60px; padding:35px 70px; border-radius:30px; border:none; background:#4CAF50; color:white">🎤</button>
+<p id="resultado" style="font-size:28px; margin-top:40px"></p>
+
+<script>
+const btn = document.getElementById('btn');
+const resultado = document.getElementById('resultado');
+
+btn.onclick = () => {
+  const reconocimiento = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  reconocimiento.lang = 'es-PE';
+  reconocimiento.onresult = (e) => {
+    const texto = e.results[0][0].transcript;
+    resultado.innerText = 'Escuché: ' + texto;
+  };
+  reconocimiento.start();
+  resultado.innerText = 'Escuchando...';
+}
+</script>
 </body>
 </html>
